@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{856C5E13-61E3-42FC-8389-94C22BA0D7EC}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>simeFramework</RootNamespace>
+    <AssemblyName>simeFramework</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="adodb, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class\Aparelho.cs" />
+    <Compile Include="Class\Aparelhos.cs" />
+    <Compile Include="Class\Atendimento.cs" />
+    <Compile Include="Class\ClassProduto\FacedeProduto.cs" />
+    <Compile Include="Class\Cliente.cs" />
+    <Compile Include="Class\Clientes.cs" />
+    <Compile Include="Class\Conexao.cs" />
+    <Compile Include="Class\ContaApagar.cs" />
+    <Compile Include="Class\ContasAPagar.cs" />
+    <Compile Include="Class\ContatosCliente.cs" />
+    <Compile Include="Class\ContatosFornecedor.cs" />
+    <Compile Include="Class\DAO\DAOCliente.cs" />
+    <Compile Include="Class\DAO\DAOContatoFornecedor.cs" />
+    <Compile Include="Class\DAO\DAOContatosCliente.cs" />
+    <Compile Include="Class\DAO\DAOFornecedor.cs" />
+    <Compile Include="Class\DAO\DAOIndicacoesCliente.cs" />
+    <Compile Include="Class\DAO\DAOInformacaoCliente.cs" />
+    <Compile Include="Class\DAO\DAOItemOrcamento.cs" />
+    <Compile Include="Class\DAO\DAOOrcamento.cs" />
+    <Compile Include="Class\DAO\DAOOS.cs" />
+    <Compile Include="Class\DAO\DAOProduto.cs" />
+    <Compile Include="Class\DAO\DAOSerieMaquina.cs" />
+    <Compile Include="Class\DAO\DAOVenda.cs" />
+    <Compile Include="Class\DAO\FactoryDAO.cs" />
+    <Compile Include="Class\DAO\IDAO.cs" />
+    <Compile Include="Class\DAO\NullNetCliente.cs" />
+    <Compile Include="Class\primitivo\NetContatsoCliente.cs" />
+    <Compile Include="Class\primitivo\NetForncedorNull.cs" />
+    <Compile Include="Class\Ean13.cs" />
+    <Compile Include="Class\Empresa.cs" />
+    <Compile Include="Class\Empresas.cs" />
+    <Compile Include="Class\Entrada.cs" />
+    <Compile Include="Class\EnumAcessorios.cs" />
+    <Compile Include="Class\EnunAlinhamentos.cs" />
+    <Compile Include="Class\EnunEnumeradores.cs" />
+    <Compile Include="Class\Fornecedor.cs" />
+    <Compile Include="Class\Fornecedores.cs" />
+    <Compile Include="Class\Grupo.cs" />
+    <Compile Include="Class\IndicacoesCliente.cs" />
+    <Compile Include="Class\infCredito.cs" />
+    <Compile Include="Class\InformacaoCredito.cs" />
+    <Compile Include="Class\Item_venda.cs" />
+    <Compile Include="Class\Itratadados.cs" />
+    <Compile Include="Class\loja.cs" />
+    <Compile Include="Class\lojas.cs" />
+    <Compile Include="Class\Marcas.cs" />
+    <Compile Include="Class\Medida.cs" />
+    <Compile Include="Class\NetConexao.cs" />
+    <Compile Include="Class\NFe\algoritimoBuscaProduto.cs" />
+    <Compile Include="Class\NFe\FormaPagamento.cs" />
+    <Compile Include="Class\NFe\Fornecedor.cs" />
+    <Compile Include="Class\NFe\LeituraXML.cs" />
+    <Compile Include="Class\NFe\Nota.cs" />
+    <Compile Include="Class\NFe\nota_entrada.cs" />
+    <Compile Include="Class\NFe\ProdutosNFe.cs" />
+    <Compile Include="Class\Orcamento\FacedeOrcamento.cs" />
+    <Compile Include="Class\Orcamento\FactoryItemOrcamento.cs" />
+    <Compile Include="Class\Orcamento\FactoryOrcamento.cs" />
+    <Compile Include="Class\Orcamento\Item_orcamento.cs" />
+    <Compile Include="Class\Orcamento\Orcamento.cs" />
+    <Compile Include="Class\Orcamento\Orcamento_Montagem.cs" />
+    <Compile Include="Class\Orcamento\SerieMaquina.cs" />
+    <Compile Include="Class\primitivo\NetCliente.cs" />
+    <Compile Include="Class\primitivo\NetContatosFornecedor.cs" />
+    <Compile Include="Class\primitivo\NetForncedores.cs" />
+    <Compile Include="Class\primitivo\NetIndicacoesCliente.cs" />
+    <Compile Include="Class\primitivo\NetInformacaoCredito.cs" />
+    <Compile Include="Class\primitivo\NetItemVenda.cs" />
+    <Compile Include="Class\primitivo\NetOS.cs" />
+    <Compile Include="Class\primitivo\NetVenda.cs" />
+    <Compile Include="Class\Produto.cs" />
+    <Compile Include="Class\ClassProduto\NetProduto.cs" />
+    <Compile Include="Class\ClassProduto\Produto.cs" />
+    <Compile Include="Class\ClassProduto\Produtos.cs" />
+    <Compile Include="Class\Produtos.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Class\Regra.cs" />
+    <Compile Include="Class\Seguradora.cs" />
+    <Compile Include="Class\testar.cs" />
+    <Compile Include="Class\tipoEstoque.cs" />
+    <Compile Include="Class\TiposAparelhos.cs" />
+    <Compile Include="Class\Usuario.cs" />
+    <Compile Include="Class\Usuarios.cs" />
+    <Compile Include="Class\Uteis.cs" />
+    <Compile Include="Class\UteisWeb.cs" />
+    <Compile Include="Class\Venda.cs" />
+    <Compile Include="Class\Vendas.cs" />
+    <Compile Include="SIME\Class\DAO\DAOEmpresa.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Class\Imagens\" />
+    <Folder Include="Class\Uploadfy\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
