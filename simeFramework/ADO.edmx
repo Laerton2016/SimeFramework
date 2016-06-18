@@ -351,7 +351,6 @@ FROM `saida` AS `saida`</DefiningQuery>
           <NavigationProperty Name="clientes_credito" Relationship="db4Model.clientesclientes_credito" FromRole="clientes" ToRole="clientes_credito" />
           <NavigationProperty Name="clientes_filiacao" Relationship="db4Model.clientesclientes_filiacao" FromRole="clientes" ToRole="clientes_filiacao" />
           <NavigationProperty Name="clientes_contatos" Relationship="db4Model.clientesclientes_contatos" FromRole="clientes" ToRole="clientes_contatos" />
-          <NavigationProperty Name="cod_sai" Relationship="db4Model.clientescod_sai" FromRole="clientes" ToRole="cod_sai" />
         </EntityType>
         <EntityType Name="clientes_credito">
           <Key>
@@ -415,10 +414,7 @@ FROM `saida` AS `saida`</DefiningQuery>
           <Property Name="DATA_CONCLUSAO" Type="DateTime" />
           <Property Name="OBS" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="produtos">
-          <Key>
-            <PropertyRef Name="Cod" />
-          </Key>
+        <EntityType Name="produtos" BaseType="db4Model.saida">
           <Property Name="Cod" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descrição" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
           <Property Name="Compatibilidade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -501,7 +497,7 @@ FROM `saida` AS `saida`</DefiningQuery>
           <Property Name="OP" Type="Int32" />
           <Property Name="CX" Type="Int32" />
           <Property Name="cartao" Type="Double" />
-          <NavigationProperty Name="clientes" Relationship="db4Model.clientescod_sai" FromRole="cod_sai" ToRole="clientes" />
+          <NavigationProperty Name="saida" Relationship="db4Model.cod_saisaida" FromRole="cod_sai" ToRole="saida" />
         </EntityType>
         <EntityType Name="entradas">
           <Key>
@@ -537,6 +533,7 @@ FROM `saida` AS `saida`</DefiningQuery>
           <Property Name="Loja" Type="Int32" />
           <Property Name="Fornecedor" Type="Int32" />
           <Property Name="NF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cod_sai1" Relationship="db4Model.cod_saisaida" FromRole="saida" ToRole="cod_sai" />
         </EntityType>
         <EntityContainer Name="db4Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="clientes" EntityType="Self.clientes" />
@@ -544,7 +541,6 @@ FROM `saida` AS `saida`</DefiningQuery>
           <EntitySet Name="clientes_filiacao" EntityType="Self.clientes_filiacao" />
           <EntitySet Name="itens_orcamento" EntityType="Self.itens_orcamento" />
           <EntitySet Name="orcamentos" EntityType="Self.orcamentos" />
-          <EntitySet Name="produtos" EntityType="Self.produtos" />
           <EntitySet Name="clientes_contatos" EntityType="Self.clientes_contatos" />
           <EntitySet Name="clientes_indica" EntityType="Self.clientes_indica" />
           <EntitySet Name="cod_sai" EntityType="Self.cod_sai" />
@@ -562,9 +558,9 @@ FROM `saida` AS `saida`</DefiningQuery>
             <End Role="clientes" EntitySet="clientes" />
             <End Role="clientes_contatos" EntitySet="clientes_contatos" />
           </AssociationSet>
-          <AssociationSet Name="clientescod_sai" Association="db4Model.clientescod_sai">
-            <End Role="clientes" EntitySet="clientes" />
+          <AssociationSet Name="cod_saisaida" Association="db4Model.cod_saisaida">
             <End Role="cod_sai" EntitySet="cod_sai" />
+            <End Role="saida" EntitySet="saida" />
           </AssociationSet>
         </EntityContainer>
         <Association Name="clientesclientes_credito">
@@ -579,9 +575,9 @@ FROM `saida` AS `saida`</DefiningQuery>
           <End Type="db4Model.clientes" Role="clientes" Multiplicity="1" />
           <End Type="db4Model.clientes_contatos" Role="clientes_contatos" Multiplicity="*" />
         </Association>
-        <Association Name="clientescod_sai">
-          <End Type="db4Model.clientes" Role="clientes" Multiplicity="1" />
-          <End Type="db4Model.cod_sai" Role="cod_sai" Multiplicity="*" />
+        <Association Name="cod_saisaida">
+          <End Type="db4Model.cod_sai" Role="cod_sai" Multiplicity="1" />
+          <End Type="db4Model.saida" Role="saida" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -687,49 +683,6 @@ FROM `saida` AS `saida`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="produtos">
-            <EntityTypeMapping TypeName="db4Model.produtos">
-              <MappingFragment StoreEntitySet="produtos">
-                <ScalarProperty Name="Cod" ColumnName="Cod" />
-                <ScalarProperty Name="Descrição" ColumnName="Descrição" />
-                <ScalarProperty Name="Compatibilidade" ColumnName="Compatibilidade" />
-                <ScalarProperty Name="Cod_de_fabricação" ColumnName="Cod de fabricação" />
-                <ScalarProperty Name="Custo" ColumnName="Custo" />
-                <ScalarProperty Name="Icm_de_Compra" ColumnName="Icm de Compra" />
-                <ScalarProperty Name="Taxa_de_frete" ColumnName="Taxa de frete" />
-                <ScalarProperty Name="IPI" ColumnName="IPI" />
-                <ScalarProperty Name="Tipo_de_cotação" ColumnName="Tipo de cotação" />
-                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
-                <ScalarProperty Name="Expr5" ColumnName="Expr5" />
-                <ScalarProperty Name="Expr7" ColumnName="Expr7" />
-                <ScalarProperty Name="imagem" ColumnName="imagem" />
-                <ScalarProperty Name="art33" ColumnName="art33" />
-                <ScalarProperty Name="peso" ColumnName="peso" />
-                <ScalarProperty Name="Codbarras" ColumnName="Codbarras" />
-                <ScalarProperty Name="desc" ColumnName="desc" />
-                <ScalarProperty Name="REGRA" ColumnName="REGRA" />
-                <ScalarProperty Name="Taxa_de_lucro_Grand" ColumnName="Taxa de lucro Grand" />
-                <ScalarProperty Name="Taxa_de_lucro_peq" ColumnName="Taxa de lucro peq" />
-                <ScalarProperty Name="Valor_de_venda_Grd" ColumnName="Valor de venda Grd" />
-                <ScalarProperty Name="Valor_de_Venda_Peq" ColumnName="Valor de Venda Peq" />
-                <ScalarProperty Name="Expr9" ColumnName="Expr9" />
-                <ScalarProperty Name="Expr6" ColumnName="Expr6" />
-                <ScalarProperty Name="Expr10" ColumnName="Expr10" />
-                <ScalarProperty Name="Expr8" ColumnName="Expr8" />
-                <ScalarProperty Name="TX_ATA_MIN" ColumnName="TX_ATA_MIN" />
-                <ScalarProperty Name="TX_ATA_MAX" ColumnName="TX_ATA_MAX" />
-                <ScalarProperty Name="TX_COR_MIN" ColumnName="TX_COR_MIN" />
-                <ScalarProperty Name="TX_COR_MAX" ColumnName="TX_COR_MAX" />
-                <ScalarProperty Name="MINI" ColumnName="MINI" />
-                <ScalarProperty Name="Medida" ColumnName="Medida" />
-                <ScalarProperty Name="COD_antigo" ColumnName="COD_antigo" />
-                <ScalarProperty Name="Tx_desconto" ColumnName="Tx_desconto" />
-                <ScalarProperty Name="Politica" ColumnName="Politica" />
-                <ScalarProperty Name="NCM" ColumnName="NCM" />
-                <ScalarProperty Name="Estoque" ColumnName="Estoque" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="clientes_contatos">
             <EntityTypeMapping TypeName="db4Model.clientes_contatos">
               <MappingFragment StoreEntitySet="clientes_contatos">
@@ -795,22 +748,63 @@ FROM `saida` AS `saida`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="saida">
-            <EntityTypeMapping TypeName="db4Model.saida">
+            <EntityTypeMapping TypeName="IsTypeOf(db4Model.saida)">
               <MappingFragment StoreEntitySet="saida">
-                <ScalarProperty Name="Cod_do_CD" ColumnName="Cod do CD" />
-                <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
-                <ScalarProperty Name="Desconto" ColumnName="Desconto" />
-                <ScalarProperty Name="cod_sai" ColumnName="cod_sai" />
-                <ScalarProperty Name="Data" ColumnName="Data" />
-                <ScalarProperty Name="Custo" ColumnName="Custo" />
-                <ScalarProperty Name="Percentual" ColumnName="Percentual" />
                 <ScalarProperty Name="Cont" ColumnName="Cont" />
-                <ScalarProperty Name="Und" ColumnName="Und" />
-                <ScalarProperty Name="NL" ColumnName="NL" />
-                <ScalarProperty Name="Op" ColumnName="Op" />
-                <ScalarProperty Name="Loja" ColumnName="Loja" />
-                <ScalarProperty Name="Fornecedor" ColumnName="Fornecedor" />
                 <ScalarProperty Name="NF" ColumnName="NF" />
+                <ScalarProperty Name="Fornecedor" ColumnName="Fornecedor" />
+                <ScalarProperty Name="Loja" ColumnName="Loja" />
+                <ScalarProperty Name="Op" ColumnName="Op" />
+                <ScalarProperty Name="NL" ColumnName="NL" />
+                <ScalarProperty Name="Und" ColumnName="Und" />
+                <ScalarProperty Name="Percentual" ColumnName="Percentual" />
+                <ScalarProperty Name="Custo" ColumnName="Custo" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="cod_sai" ColumnName="cod_sai" />
+                <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+                <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+                <ScalarProperty Name="Cod_do_CD" ColumnName="Cod do CD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(db4Model.produtos)">
+              <MappingFragment StoreEntitySet="produtos">
+                <ScalarProperty Name="Estoque" ColumnName="Estoque" />
+                <ScalarProperty Name="NCM" ColumnName="NCM" />
+                <ScalarProperty Name="Politica" ColumnName="Politica" />
+                <ScalarProperty Name="Tx_desconto" ColumnName="Tx_desconto" />
+                <ScalarProperty Name="COD_antigo" ColumnName="COD_antigo" />
+                <ScalarProperty Name="Medida" ColumnName="Medida" />
+                <ScalarProperty Name="MINI" ColumnName="MINI" />
+                <ScalarProperty Name="TX_COR_MAX" ColumnName="TX_COR_MAX" />
+                <ScalarProperty Name="TX_COR_MIN" ColumnName="TX_COR_MIN" />
+                <ScalarProperty Name="TX_ATA_MAX" ColumnName="TX_ATA_MAX" />
+                <ScalarProperty Name="TX_ATA_MIN" ColumnName="TX_ATA_MIN" />
+                <ScalarProperty Name="Expr8" ColumnName="Expr8" />
+                <ScalarProperty Name="Expr10" ColumnName="Expr10" />
+                <ScalarProperty Name="Expr6" ColumnName="Expr6" />
+                <ScalarProperty Name="Expr9" ColumnName="Expr9" />
+                <ScalarProperty Name="Valor_de_Venda_Peq" ColumnName="Valor de Venda Peq" />
+                <ScalarProperty Name="Valor_de_venda_Grd" ColumnName="Valor de venda Grd" />
+                <ScalarProperty Name="Taxa_de_lucro_peq" ColumnName="Taxa de lucro peq" />
+                <ScalarProperty Name="Taxa_de_lucro_Grand" ColumnName="Taxa de lucro Grand" />
+                <ScalarProperty Name="REGRA" ColumnName="REGRA" />
+                <ScalarProperty Name="desc" ColumnName="desc" />
+                <ScalarProperty Name="Codbarras" ColumnName="Codbarras" />
+                <ScalarProperty Name="peso" ColumnName="peso" />
+                <ScalarProperty Name="art33" ColumnName="art33" />
+                <ScalarProperty Name="imagem" ColumnName="imagem" />
+                <ScalarProperty Name="Expr7" ColumnName="Expr7" />
+                <ScalarProperty Name="Expr5" ColumnName="Expr5" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+                <ScalarProperty Name="Tipo_de_cotação" ColumnName="Tipo de cotação" />
+                <ScalarProperty Name="IPI" ColumnName="IPI" />
+                <ScalarProperty Name="Taxa_de_frete" ColumnName="Taxa de frete" />
+                <ScalarProperty Name="Icm_de_Compra" ColumnName="Icm de Compra" />
+                
+                <ScalarProperty Name="Cod_de_fabricação" ColumnName="Cod de fabricação" />
+                <ScalarProperty Name="Compatibilidade" ColumnName="Compatibilidade" />
+                <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+                <ScalarProperty Name="Cod" ColumnName="Cod" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

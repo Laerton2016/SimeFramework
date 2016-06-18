@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5f71669ab8cb4f7fbdd71bec75f37713" Name="Diagram1" ZoomLevel="89">
+      <Diagram DiagramId="5f71669ab8cb4f7fbdd71bec75f37713" Name="Diagram1" ZoomLevel="86">
         <EntityTypeShape EntityType="db4Model.clientes" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="db4Model.clientes_credito" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="db4Model.clientes_filiacao" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
@@ -15,11 +15,12 @@
         <EntityTypeShape EntityType="db4Model.clientes_indica" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="db4Model.cod_sai" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="db4Model.entradas" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="db4Model.saida" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db4Model.saida" Width="1.5" PointX="10.875" PointY="9.25" IsExpanded="true" />
         <AssociationConnector Association="db4Model.clientesclientes_credito" />
         <AssociationConnector Association="db4Model.clientesclientes_filiacao" />
         <AssociationConnector Association="db4Model.clientesclientes_contatos" />
-        <AssociationConnector Association="db4Model.clientescod_sai" />
+        <AssociationConnector Association="db4Model.cod_saisaida" />
+        <InheritanceConnector EntityType="db4Model.produtos" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

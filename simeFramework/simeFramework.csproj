@@ -80,41 +80,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ADO.edmx</DependentUpon>
     </Compile>
-    <Compile Include="clientes.cs">
-      <DependentUpon>ADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="clientes_contatos.cs">
-      <DependentUpon>ADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="clientes_credito.cs">
-      <DependentUpon>ADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="clientes_filiacao.cs">
-      <DependentUpon>ADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="clientes_indica.cs">
-      <DependentUpon>ADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="cod_sai.cs">
-      <DependentUpon>ADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="entradas.cs">
-      <DependentUpon>ADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="itens_orcamento.cs">
-      <DependentUpon>ADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="orcamentos.cs">
-      <DependentUpon>ADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="produtos.cs">
-      <DependentUpon>ADO.tt</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="saida.cs">
-      <DependentUpon>ADO.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ADO.edmx">
