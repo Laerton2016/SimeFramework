@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="db4Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="db4Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="clientes">
           <Key>
             <PropertyRef Name="Cod_cliente" />
@@ -38,16 +38,14 @@
           <Property Name="Id_vendedor" Type="int" />
           <Property Name="Data_adesao" Type="datetime" Precision="0" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'def.db4.clientes_contatos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="clientes_contatos">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="cod_cliente" Type="int" />
+          <Property Name="cod_cliente" Type="int" Nullable="false" />
           <Property Name="Tipo" Type="varchar" MaxLength="50" />
           <Property Name="contatos" Type="varchar" MaxLength="100" />
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="clientes_credito">
           <Key>
@@ -70,8 +68,6 @@ warning 6002: The table/view 'def.db4.clientes_contatos' does not have a primary
           <Property Name="classifica" Type="varchar" MaxLength="25" />
           <Property Name="Data" Type="datetime" Precision="0" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'def.db4.clientes_indica' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="clientes_indica">
           <Key>
             <PropertyRef Name="ID" />
@@ -174,7 +170,7 @@ warning 6002: The table/view 'def.db4.entradas' does not have a primary key defi
           <Property Name="Descrição" Type="longtext" />
           <Property Name="Compatibilidade" Type="varchar" MaxLength="50" />
           <Property Name="Cod de fabricação" Type="varchar" MaxLength="20" />
-          <Property Name="Custo" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="Custo" Type="decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Icm de Compra" Type="double" />
           <Property Name="Taxa de frete" Type="double" />
           <Property Name="IPI" Type="double" />
@@ -229,30 +225,71 @@ warning 6002: The table/view 'def.db4.saida' does not have a primary key defined
           <Property Name="Fornecedor" Type="int" />
           <Property Name="NF" Type="varchar" MaxLength="50" />
         </EntityType>
+        <Association Name="fk1">
+          <End Role="clientes" Type="Self.clientes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="clientes_contatos" Type="Self.clientes_contatos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="Cod_cliente" />
+            </Principal>
+            <Dependent Role="clientes_contatos">
+              <PropertyRef Name="cod_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk3">
+          <End Role="clientes" Type="Self.clientes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="clientes_credito" Type="Self.clientes_credito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="Cod_cliente" />
+            </Principal>
+            <Dependent Role="clientes_credito">
+              <PropertyRef Name="cod_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk4">
+          <End Role="clientes" Type="Self.clientes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="clientes_filiacao" Type="Self.clientes_filiacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="Cod_cliente" />
+            </Principal>
+            <Dependent Role="clientes_filiacao">
+              <PropertyRef Name="Cod_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk5">
+          <End Role="clientes" Type="Self.clientes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="clientes_indica" Type="Self.clientes_indica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="Cod_cliente" />
+            </Principal>
+            <Dependent Role="clientes_indica">
+              <PropertyRef Name="cod_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="db4ModelStoreContainer">
           <EntitySet Name="clientes" EntityType="Self.clientes" Schema="db4" store:Type="Tables" />
+          <EntitySet Name="clientes_contatos" EntityType="Self.clientes_contatos" Schema="db4" store:Type="Tables" />
           <EntitySet Name="clientes_credito" EntityType="Self.clientes_credito" Schema="db4" store:Type="Tables" />
           <EntitySet Name="clientes_filiacao" EntityType="Self.clientes_filiacao" Schema="db4" store:Type="Tables" />
+          <EntitySet Name="clientes_indica" EntityType="Self.clientes_indica" Schema="db4" store:Type="Tables" />
           <EntitySet Name="itens_orcamento" EntityType="Self.itens_orcamento" Schema="db4" store:Type="Tables" />
           <EntitySet Name="orcamentos" EntityType="Self.orcamentos" Schema="db4" store:Type="Tables" />
           <EntitySet Name="produtos" EntityType="Self.produtos" Schema="db4" store:Type="Tables" />
-          <EntitySet Name="clientes_contatos" EntityType="Self.clientes_contatos" store:Type="Tables" store:Schema="db4">
-            <DefiningQuery>SELECT
-`clientes_contatos`.`cod_cliente`, 
-`clientes_contatos`.`Tipo`, 
-`clientes_contatos`.`contatos`, 
-`clientes_contatos`.`ID`
-FROM `clientes_contatos` AS `clientes_contatos`</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="clientes_indica" EntityType="Self.clientes_indica" store:Type="Tables" store:Schema="db4">
-            <DefiningQuery>SELECT
-`clientes_indica`.`cod_cliente`, 
-`clientes_indica`.`Tipo`, 
-`clientes_indica`.`Contato`, 
-`clientes_indica`.`tel`, 
-`clientes_indica`.`ID`
-FROM `clientes_indica` AS `clientes_indica`</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="cod_sai" EntityType="Self.cod_sai" store:Type="Tables" store:Schema="db4">
             <DefiningQuery>SELECT
 `cod_sai`.`Data`, 
@@ -310,9 +347,24 @@ FROM `entradas` AS `entradas`</DefiningQuery>
 `saida`.`NF`
 FROM `saida` AS `saida`</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="fk1" Association="Self.fk1">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="clientes_contatos" EntitySet="clientes_contatos" />
+          </AssociationSet>
+          <AssociationSet Name="fk3" Association="Self.fk3">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="clientes_credito" EntitySet="clientes_credito" />
+          </AssociationSet>
+          <AssociationSet Name="fk4" Association="Self.fk4">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="clientes_filiacao" EntitySet="clientes_filiacao" />
+          </AssociationSet>
+          <AssociationSet Name="fk5" Association="Self.fk5">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="clientes_indica" EntitySet="clientes_indica" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="db4Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -348,9 +400,10 @@ FROM `saida` AS `saida`</DefiningQuery>
           <Property Name="Data" Type="DateTime" />
           <Property Name="Id_vendedor" Type="Int32" />
           <Property Name="Data_adesao" Type="DateTime" />
-          <NavigationProperty Name="clientes_credito" Relationship="db4Model.clientesclientes_credito" FromRole="clientes" ToRole="clientes_credito" />
-          <NavigationProperty Name="clientes_filiacao" Relationship="db4Model.clientesclientes_filiacao" FromRole="clientes" ToRole="clientes_filiacao" />
-          <NavigationProperty Name="clientes_contatos" Relationship="db4Model.clientesclientes_contatos" FromRole="clientes" ToRole="clientes_contatos" />
+          <NavigationProperty Name="clientes_contatos" Relationship="db4Model.fk1" FromRole="clientes" ToRole="clientes_contatos" />
+          <NavigationProperty Name="clientes_credito" Relationship="db4Model.fk3" FromRole="clientes" ToRole="clientes_credito" />
+          <NavigationProperty Name="clientes_filiacao" Relationship="db4Model.fk4" FromRole="clientes" ToRole="clientes_filiacao" />
+          <NavigationProperty Name="clientes_indica" Relationship="db4Model.fk5" FromRole="clientes" ToRole="clientes_indica" />
         </EntityType>
         <EntityType Name="clientes_credito">
           <Key>
@@ -359,7 +412,7 @@ FROM `saida` AS `saida`</DefiningQuery>
           <Property Name="cod" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="cod_cliente" Type="Int32" />
           <Property Name="Credito" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="clientes" Relationship="db4Model.clientesclientes_credito" FromRole="clientes_credito" ToRole="clientes" />
+          <NavigationProperty Name="cliente" Relationship="db4Model.fk3" FromRole="clientes_credito" ToRole="clientes" />
         </EntityType>
         <EntityType Name="clientes_filiacao">
           <Key>
@@ -373,7 +426,7 @@ FROM `saida` AS `saida`</DefiningQuery>
           <Property Name="Limite" Type="Double" />
           <Property Name="classifica" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Data" Type="DateTime" />
-          <NavigationProperty Name="clientes" Relationship="db4Model.clientesclientes_filiacao" FromRole="clientes_filiacao" ToRole="clientes" />
+          <NavigationProperty Name="cliente" Relationship="db4Model.fk4" FromRole="clientes_filiacao" ToRole="clientes" />
         </EntityType>
         <EntityType Name="itens_orcamento">
           <Key>
@@ -414,45 +467,6 @@ FROM `saida` AS `saida`</DefiningQuery>
           <Property Name="DATA_CONCLUSAO" Type="DateTime" />
           <Property Name="OBS" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="produtos" BaseType="db4Model.saida">
-          <Property Name="Cod" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descrição" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
-          <Property Name="Compatibilidade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Cod_de_fabricação" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Custo" Type="Decimal" />
-          <Property Name="Icm_de_Compra" Type="Double" />
-          <Property Name="Taxa_de_frete" Type="Double" />
-          <Property Name="IPI" Type="Double" />
-          <Property Name="Tipo_de_cotação" Type="Int32" />
-          <Property Name="TIPO" Type="Int32" />
-          <Property Name="Expr5" Type="Decimal" />
-          <Property Name="Expr7" Type="Decimal" />
-          <Property Name="imagem" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="art33" Type="Boolean" />
-          <Property Name="peso" Type="Double" />
-          <Property Name="Codbarras" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="desc" Type="Boolean" />
-          <Property Name="REGRA" Type="Int32" />
-          <Property Name="Taxa_de_lucro_Grand" Type="Double" />
-          <Property Name="Taxa_de_lucro_peq" Type="Double" />
-          <Property Name="Valor_de_venda_Grd" Type="Double" />
-          <Property Name="Valor_de_Venda_Peq" Type="Int32" />
-          <Property Name="Expr9" Type="Decimal" />
-          <Property Name="Expr6" Type="Decimal" />
-          <Property Name="Expr10" Type="Decimal" />
-          <Property Name="Expr8" Type="Decimal" />
-          <Property Name="TX_ATA_MIN" Type="Double" />
-          <Property Name="TX_ATA_MAX" Type="Double" />
-          <Property Name="TX_COR_MIN" Type="Double" />
-          <Property Name="TX_COR_MAX" Type="Double" />
-          <Property Name="MINI" Type="Int32" />
-          <Property Name="Medida" Type="Int32" />
-          <Property Name="COD_antigo" Type="Single" />
-          <Property Name="Tx_desconto" Type="Double" />
-          <Property Name="Politica" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="NCM" Type="Int32" />
-          <Property Name="Estoque" Type="Int32" />
-        </EntityType>
         <EntityType Name="clientes_contatos">
           <Key>
             <PropertyRef Name="ID" />
@@ -461,7 +475,7 @@ FROM `saida` AS `saida`</DefiningQuery>
           <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="contatos" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="clientes" Relationship="db4Model.clientesclientes_contatos" FromRole="clientes_contatos" ToRole="clientes" />
+          <NavigationProperty Name="cliente" Relationship="db4Model.fk1" FromRole="clientes_contatos" ToRole="clientes" />
         </EntityType>
         <EntityType Name="clientes_indica">
           <Key>
@@ -472,6 +486,7 @@ FROM `saida` AS `saida`</DefiningQuery>
           <Property Name="Contato" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="tel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="cliente" Relationship="db4Model.fk5" FromRole="clientes_indica" ToRole="clientes" />
         </EntityType>
         <EntityType Name="cod_sai">
           <Key>
@@ -497,7 +512,6 @@ FROM `saida` AS `saida`</DefiningQuery>
           <Property Name="OP" Type="Int32" />
           <Property Name="CX" Type="Int32" />
           <Property Name="cartao" Type="Double" />
-          <NavigationProperty Name="saida" Relationship="db4Model.cod_saisaida" FromRole="cod_sai" ToRole="saida" />
         </EntityType>
         <EntityType Name="entradas">
           <Key>
@@ -533,7 +547,6 @@ FROM `saida` AS `saida`</DefiningQuery>
           <Property Name="Loja" Type="Int32" />
           <Property Name="Fornecedor" Type="Int32" />
           <Property Name="NF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="cod_sai1" Relationship="db4Model.cod_saisaida" FromRole="saida" ToRole="cod_sai" />
         </EntityType>
         <EntityContainer Name="db4Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="clientes" EntityType="Self.clientes" />
@@ -546,39 +559,120 @@ FROM `saida` AS `saida`</DefiningQuery>
           <EntitySet Name="cod_sai" EntityType="Self.cod_sai" />
           <EntitySet Name="entradas" EntityType="Self.entradas" />
           <EntitySet Name="saida" EntityType="Self.saida" />
-          <AssociationSet Name="clientesclientes_credito" Association="db4Model.clientesclientes_credito">
-            <End Role="clientes" EntitySet="clientes" />
-            <End Role="clientes_credito" EntitySet="clientes_credito" />
-          </AssociationSet>
-          <AssociationSet Name="clientesclientes_filiacao" Association="db4Model.clientesclientes_filiacao">
-            <End Role="clientes" EntitySet="clientes" />
-            <End Role="clientes_filiacao" EntitySet="clientes_filiacao" />
-          </AssociationSet>
-          <AssociationSet Name="clientesclientes_contatos" Association="db4Model.clientesclientes_contatos">
+          <AssociationSet Name="fk1" Association="db4Model.fk1">
             <End Role="clientes" EntitySet="clientes" />
             <End Role="clientes_contatos" EntitySet="clientes_contatos" />
           </AssociationSet>
-          <AssociationSet Name="cod_saisaida" Association="db4Model.cod_saisaida">
-            <End Role="cod_sai" EntitySet="cod_sai" />
-            <End Role="saida" EntitySet="saida" />
+          <AssociationSet Name="fk3" Association="db4Model.fk3">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="clientes_credito" EntitySet="clientes_credito" />
           </AssociationSet>
+          <AssociationSet Name="fk4" Association="db4Model.fk4">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="clientes_filiacao" EntitySet="clientes_filiacao" />
+          </AssociationSet>
+          <AssociationSet Name="fk5" Association="db4Model.fk5">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="clientes_indica" EntitySet="clientes_indica" />
+          </AssociationSet>
+          <EntitySet Name="produtos" EntityType="db4Model.produto" />
         </EntityContainer>
-        <Association Name="clientesclientes_credito">
-          <End Type="db4Model.clientes" Role="clientes" Multiplicity="1" />
-          <End Type="db4Model.clientes_credito" Role="clientes_credito" Multiplicity="*" />
-        </Association>
-        <Association Name="clientesclientes_filiacao">
-          <End Type="db4Model.clientes" Role="clientes" Multiplicity="1" />
-          <End Type="db4Model.clientes_filiacao" Role="clientes_filiacao" Multiplicity="*" />
-        </Association>
-        <Association Name="clientesclientes_contatos">
-          <End Type="db4Model.clientes" Role="clientes" Multiplicity="1" />
+        <Association Name="fk1">
+          <End Type="db4Model.clientes" Role="clientes" Multiplicity="0..1" />
           <End Type="db4Model.clientes_contatos" Role="clientes_contatos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="Cod_cliente" />
+            </Principal>
+            <Dependent Role="clientes_contatos">
+              <PropertyRef Name="cod_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <Association Name="cod_saisaida">
-          <End Type="db4Model.cod_sai" Role="cod_sai" Multiplicity="1" />
-          <End Type="db4Model.saida" Role="saida" Multiplicity="*" />
+        <Association Name="fk3">
+          <End Type="db4Model.clientes" Role="clientes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="db4Model.clientes_credito" Role="clientes_credito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="Cod_cliente" />
+            </Principal>
+            <Dependent Role="clientes_credito">
+              <PropertyRef Name="cod_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
+        <Association Name="fk4">
+          <End Type="db4Model.clientes" Role="clientes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="db4Model.clientes_filiacao" Role="clientes_filiacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="Cod_cliente" />
+            </Principal>
+            <Dependent Role="clientes_filiacao">
+              <PropertyRef Name="Cod_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk5">
+          <End Type="db4Model.clientes" Role="clientes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="db4Model.clientes_indica" Role="clientes_indica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="Cod_cliente" />
+            </Principal>
+            <Dependent Role="clientes_indica">
+              <PropertyRef Name="cod_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="produto">
+          <Key>
+            <PropertyRef Name="Cod" />
+          </Key>
+          <Property Name="Cod" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descrição" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="Compatibilidade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cod_de_fabricação" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Custo" Type="Decimal" Nullable="false" />
+          <Property Name="Icm_de_Compra" Type="Double" />
+          <Property Name="Taxa_de_frete" Type="Double" />
+          <Property Name="IPI" Type="Double" />
+          <Property Name="Tipo_de_cotação" Type="Int32" />
+          <Property Name="TIPO" Type="Int32" />
+          <Property Name="Expr5" Type="Decimal" />
+          <Property Name="Expr7" Type="Decimal" />
+          <Property Name="imagem" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="art33" Type="Boolean" />
+          <Property Name="peso" Type="Double" />
+          <Property Name="Codbarras" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="desc" Type="Boolean" />
+          <Property Name="REGRA" Type="Int32" />
+          <Property Name="Taxa_de_lucro_Grand" Type="Double" />
+          <Property Name="Taxa_de_lucro_peq" Type="Double" />
+          <Property Name="Valor_de_venda_Grd" Type="Double" />
+          <Property Name="Valor_de_Venda_Peq" Type="Int32" />
+          <Property Name="Expr9" Type="Decimal" />
+          <Property Name="Expr6" Type="Decimal" />
+          <Property Name="Expr10" Type="Decimal" />
+          <Property Name="Expr8" Type="Decimal" />
+          <Property Name="TX_ATA_MIN" Type="Double" />
+          <Property Name="TX_ATA_MAX" Type="Double" />
+          <Property Name="TX_COR_MIN" Type="Double" />
+          <Property Name="TX_COR_MAX" Type="Double" />
+          <Property Name="MINI" Type="Int32" />
+          <Property Name="Medida" Type="Int32" />
+          <Property Name="COD_antigo" Type="Single" />
+          <Property Name="Tx_desconto" Type="Double" />
+          <Property Name="Politica" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NCM" Type="Int32" />
+          <Property Name="Estoque" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -766,7 +860,9 @@ FROM `saida` AS `saida`</DefiningQuery>
                 <ScalarProperty Name="Cod_do_CD" ColumnName="Cod do CD" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(db4Model.produtos)">
+          </EntitySetMapping>
+          <EntitySetMapping Name="produtos">
+            <EntityTypeMapping TypeName="db4Model.produto">
               <MappingFragment StoreEntitySet="produtos">
                 <ScalarProperty Name="Estoque" ColumnName="Estoque" />
                 <ScalarProperty Name="NCM" ColumnName="NCM" />
@@ -800,7 +896,7 @@ FROM `saida` AS `saida`</DefiningQuery>
                 <ScalarProperty Name="IPI" ColumnName="IPI" />
                 <ScalarProperty Name="Taxa_de_frete" ColumnName="Taxa de frete" />
                 <ScalarProperty Name="Icm_de_Compra" ColumnName="Icm de Compra" />
-                
+                <ScalarProperty Name="Custo" ColumnName="Custo" />
                 <ScalarProperty Name="Cod_de_fabricação" ColumnName="Cod de fabricação" />
                 <ScalarProperty Name="Compatibilidade" ColumnName="Compatibilidade" />
                 <ScalarProperty Name="Descrição" ColumnName="Descrição" />
@@ -822,7 +918,7 @@ FROM `saida` AS `saida`</DefiningQuery>
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

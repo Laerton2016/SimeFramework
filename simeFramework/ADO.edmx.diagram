@@ -4,23 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5f71669ab8cb4f7fbdd71bec75f37713" Name="Diagram1" ZoomLevel="86">
+      <Diagram DiagramId="5f71669ab8cb4f7fbdd71bec75f37713" Name="Diagram1" ZoomLevel="70">
         <EntityTypeShape EntityType="db4Model.clientes" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="db4Model.clientes_credito" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="db4Model.clientes_filiacao" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="db4Model.itens_orcamento" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="db4Model.orcamentos" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="db4Model.produtos" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="db4Model.clientes_contatos" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="db4Model.clientes_indica" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="db4Model.cod_sai" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="db4Model.entradas" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db4Model.cod_sai" Width="1.5" PointX="8.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db4Model.entradas" Width="1.5" PointX="10.5" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="db4Model.saida" Width="1.5" PointX="10.875" PointY="9.25" IsExpanded="true" />
-        <AssociationConnector Association="db4Model.clientesclientes_credito" />
-        <AssociationConnector Association="db4Model.clientesclientes_filiacao" />
-        <AssociationConnector Association="db4Model.clientesclientes_contatos" />
-        <AssociationConnector Association="db4Model.cod_saisaida" />
-        <InheritanceConnector EntityType="db4Model.produtos" />
+        <AssociationConnector Association="db4Model.fk1" />
+        <AssociationConnector Association="db4Model.fk3" />
+        <AssociationConnector Association="db4Model.fk4" />
+        <AssociationConnector Association="db4Model.fk5" />
+        <EntityTypeShape EntityType="db4Model.produto" Width="1.5" PointX="6.625" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
